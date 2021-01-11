@@ -53,7 +53,10 @@ classdef DAQ < handle
         
     end
     methods
-        function obj = DAQ(NOC,sample_rate,isEvent,isSlave)
+        function obj = DAQ(NOC,sample_rate,isEvent,isSlave, port)
+            if nargin < 5
+                port = detect_port()
+            end
             if nargin < 4
                 isSlave = 0;
             end
@@ -66,7 +69,7 @@ classdef DAQ < handle
             if nargin < 1
                 NOC = 0;
             end
-            obj.port = detect_port(); % TRY CATCH ?
+            obj.port = port;
             obj.set_param(NOC,sample_rate,isEvent,isSlave);
             obj.set_ser_param();
             obj.set_var();
